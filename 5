@@ -1,0 +1,78 @@
+public class MyTime {
+    private int hour;
+    private int minute;
+
+    public MyTime(int hour, int minute) {
+        setTime(hour, minute);
+    }
+
+    public void setTime(int hour, int minute) {
+        setHour(hour);
+        setMinute(minute);
+    }
+
+    public void setHour(int hour) {
+        if (hour >= 0 && hour < 24) {
+            this.hour = hour;
+        } else {
+            throw new IllegalArgumentException("Invalid hour");
+        }
+    }
+
+    public void setMinute(int minute) {
+        if (minute >= 0 && minute < 60) {
+            this.minute = minute;
+        } else {
+            throw new IllegalArgumentException("Invalid minute");
+        }
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public int nextHour() {
+        if (hour == 23) {
+            hour = 0;
+        } else {
+            hour++;
+        }
+        return hour;
+    }
+
+    public int nextMinute() {
+        if (minute == 59) {
+            minute = 0;
+            nextHour();
+        } else {
+            minute++;
+        }
+        return minute;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d", hour, minute);
+    }
+
+    public MyTime nextMinuteInstance() {
+        nextMinute();
+        return this;
+    }
+
+    public MyTime nextHourInstance() {
+        nextHour();
+        return this;
+    }
+
+    public static void main(String[] args) {
+        MyTime time = new MyTime(23, 59);
+        System.out.println("Current time: " + time);
+        System.out.println("Next minute: " + time.nextMinuteInstance());
+        System.out.println("Next hour: " + time.nextHourInstance());
+    }
+}
